@@ -1,6 +1,8 @@
 const form = document.getElementById("myForm");
 const screenText = document.getElementById("screenText");
 const degreeBtns = document.querySelectorAll(".degree");
+const weatherImg = document.getElementById("weather-image");
+console.log(weatherImg);
 
 degreeBtns.forEach((btn) => {
     btn.addEventListener('click', function () {
@@ -26,6 +28,8 @@ async function getWeatherData(location) {
     const url = 'https://api.weatherapi.com/v1/current.json?key=' + key + '&q=' + location;
     const response = await fetch(url, {mode : 'cors'});
     const responseData = await response.json();
+    const iconUrl = 'https:' + responseData.current.condition.icon;
+    weatherImg.src = iconUrl;
     // console.log(responseData);
     // currentTemperatureInCelsius = responseData.current.temp_c;
     // currentTemperatureInFarenheit = responseData.current.temp_f;
