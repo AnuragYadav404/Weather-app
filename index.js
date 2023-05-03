@@ -23,7 +23,7 @@ var currentLocation = 'london';
 
 // https://api.weatherapi.com/v1/current.json?key=523bf92de349436bab3140114230305&q=london
 async function getWeatherData(location) {
-    const url = 'http://api.weatherapi.com/v1/current.json?key=' + key + '&q=' + location;
+    const url = 'https://api.weatherapi.com/v1/current.json?key=' + key + '&q=' + location;
     const response = await fetch(url, {mode : 'cors'});
     const responseData = await response.json();
     // console.log(responseData);
