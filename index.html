@@ -9,6 +9,22 @@
     <title>Weather App</title>
 </head>
 <body>
-    
+    <form id="myForm" >
+        <select name="location" id="location">
+            <option value="london">London</option>
+            <option value="delhi">Delhi</option>
+            <option value="munich">Munich</option>
+            <option value="california">California</option>
+            <option value="bangalore">Bangalore</option>
+        </select>
+        <button type="submit">Get Weather</button>
+    </form>
+    <div class="content">
+        <button class="degree" data-val="celsius">Celsius</button>
+        <button class="degree" data-val="fahrenheit">Fahrenheit</button>
+        <div class="display">
+            <h1 id="screenText"></h1>
+        </div>
+    </div>
 </body>
 </html>
