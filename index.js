@@ -1,65 +1,75 @@
 const form = document.getElementById("myForm");
-const screenText = document.getElementById("screenText");
-const degreeBtns = document.querySelectorAll(".degree");
 const weatherImg = document.getElementById("weather-image");
-console.log(weatherImg);
 
-degreeBtns.forEach((btn) => {
-    btn.addEventListener('click', function () {
-        const btnData = btn.getAttribute('data-val');
-        console.log()
-        currentBtn = btnData;
-        updateScreenText();
-    })  
-})
+const text = document.getElementById("text");
+const celsius = document.getElementById("celsiusText");
+const celsiusFeelsLike = document.getElementById("celsiusFeelsLike");
+const fahren = document.getElementById("fahrenText");
+const fahrenFeelsLike = document.getElementById("fahrenFeelsLike");
+const loc = document.getElementById("loc");
+console.log(loc)
 
 const key = '523bf92de349436bab3140114230305';
-var currentTemperatureInCelsius = 0;
-var currentTemperatureInFahrenheit = 0;
-var currentBtn = 'celsius';
-var currentLocation = 'london';
-
-
-
-
 
 // https://api.weatherapi.com/v1/current.json?key=523bf92de349436bab3140114230305&q=london
 async function getWeatherData(location) {
-    const url = 'https://api.weatherapi.com/v1/current.json?key=' + key + '&q=' + location;
-    const response = await fetch(url, {mode : 'cors'});
-    const responseData = await response.json();
-    const iconUrl = 'https:' + responseData.current.condition.icon;
-    weatherImg.src = iconUrl;
-    // console.log(responseData);
-    // currentTemperatureInCelsius = responseData.current.temp_c;
-    // currentTemperatureInFarenheit = responseData.current.temp_f;
-    // console.log(currentTemperatureInCelsius, currentTemperatureInFahrenheit);
-    return [responseData.current.temp_c, responseData.current.temp_f];
+    try {
+        const url = 'https://api.weatherapi.com/v1/current.json?key=' + key + '&q=' + location;
+        const response = await fetch(url, {mode : 'cors'});
+        if(response.status == 400) {
+            handleError('No Matching location found.')
+        }else {
+        const responseData = await response.json();
+        console.log(responseData);
+            // if(responseData.hasOwnProperty('error')) {
+            //     handleError(responseData.error.message);
+            // }else {
+                
+            // }
+        updateDisplay(responseData.location.name, responseData.current.condition.text, responseData.current.temp_c, responseData.current.feelslike_c,responseData.current.temp_f, responseData.current.feelslike_f,'https:' + responseData.current.condition.icon);
+    }
+    } catch (err) {
+        console.log("There was an error retrieving weather data. Please try again later.");
+    }
+    
 }
+
+function updateDisplay(location,message, temp_c, feels_c, temp_f, feels_f, url) {
+    loc.innerText = location;
+    text.innerText = message;
+    celsius.innerText  = "Celsius temperature: " + temp_c;
+    celsiusFeelsLike.innerText = "Celsius Feels like: " + feels_c;
+    fahren.innerText  = "Fahrenheit temperature: " + temp_f;
+    fahrenFeelsLike.innerText =  "Fahrenheit Feels like: " + feels_f;
+    if(weatherImg.classList.contains("disable")) {
+        weatherImg.classList.remove("disable");
+    }
+    weatherImg.src = url;
+}
+
+function handleError(message) {
+    loc.innerText = 'N/A';
+    text.innerText = message;
+    celsius.innerText  = 'N/A';
+    celsiusFeelsLike.innerText = 'N/A'
+    fahren.innerText  = 'N/A';
+    fahrenFeelsLike.innerText = 'N/A'
+    weatherImg.className = "disable";
+}
+
 
 form.addEventListener('submit', handleSubmit);
 
 function handleSubmit(e) {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
-    console.log(data);
-    currentLocation = data.location;
-    run(data.location);
+    getWeatherData(data.location);
     e.preventDefault();
     e.target.reset();
 }
 
-async function run(location) {
-    [currentTemperatureInCelsius, currentTemperatureInFahrenheit] = await getWeatherData(location);
-    updateScreenText();
+async function intialRun() {
+    await getWeatherData('london');
 }
 
-function updateScreenText() {
-    if(currentBtn == 'celsius') {
-        screenText.innerText = currentTemperatureInCelsius + ` degree Celsius in ${currentLocation}`;
-    }else {
-        screenText.innerText = currentTemperatureInFahrenheit + ` degree Fahrenheit in ${currentLocation}` ;
-    }
-}
-
-run(currentLocation);
+intialRun();

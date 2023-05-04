@@ -10,22 +10,26 @@
 </head>
 <body>
     <form id="myForm" >
-        <select name="location" id="location">
-            <option value="london">London</option>
-            <option value="delhi">Delhi</option>
-            <option value="munich">Munich</option>
-            <option value="california">California</option>
-            <option value="bangalore">Bangalore</option>
-        </select>
+        <label for="location">
+            <input type="text" id="location" name="location">
+        </label>
         <button type="submit">Get Weather</button>
     </form>
     <div class="content">
-        <button class="degree" data-val="celsius">Celsius</button>
-        <button class="degree" data-val="fahrenheit">Fahrenheit</button>
         <div class="display">
-            <h1 id="screenText"></h1>
+            <h1 id="loc"></h1>
+            <h2 id="text"></h2>
+            <div class="celsius">
+                <p id="celsiusText"></p>
+                <p id="celsiusFeelsLike"></p>
+            </div>
+            <div class="fahren">
+                <p id="fahrenText"></p>
+                <p id="fahrenFeelsLike"></p>
+            </div>
+            <img src="" alt="weather-image" id="weather-image">
         </div>
-        <img src="" alt="weather-image" id="weather-image">
+        
     </div>
 </body>
 </html>

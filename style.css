@@ -1,0 +1,31 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: ; */
+}
+
+
+.disable {
+    display: none;
+}
+
+
+img {
+    width: 150px;
+    height: 150px;
+}
