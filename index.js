@@ -7,7 +7,7 @@ const celsiusFeelsLike = document.getElementById("celsiusFeelsLike");
 const fahren = document.getElementById("fahrenText");
 const fahrenFeelsLike = document.getElementById("fahrenFeelsLike");
 const loc = document.getElementById("loc");
-console.log(loc)
+// console.log(loc)
 
 const key = '523bf92de349436bab3140114230305';
 
@@ -20,7 +20,7 @@ async function getWeatherData(location) {
             handleError('No Matching location found.')
         }else {
         const responseData = await response.json();
-        console.log(responseData);
+        // console.log(responseData);
             // if(responseData.hasOwnProperty('error')) {
             //     handleError(responseData.error.message);
             // }else {
@@ -29,7 +29,7 @@ async function getWeatherData(location) {
         updateDisplay(responseData.location.name, responseData.current.condition.text, responseData.current.temp_c, responseData.current.feelslike_c,responseData.current.temp_f, responseData.current.feelslike_f,'https:' + responseData.current.condition.icon);
     }
     } catch (err) {
-        console.log("There was an error retrieving weather data. Please try again later.");
+        // console.log("There was an error retrieving weather data. Please try again later.");
     }
     
 }
